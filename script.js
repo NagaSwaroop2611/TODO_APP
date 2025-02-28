@@ -1,3 +1,4 @@
+// JavaScript code
 const todoForm = document.getElementById('todo-form');
 const todoList = document.getElementById('todo-list');
 const deleteSelectedButton = document.getElementById('delete-selected');
