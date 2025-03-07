@@ -1,118 +1,121 @@
-/* CSS code  starts from here*/
+/* CSS Code */
 body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f7f6;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
-    }
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  color: #fff;
+}
 
-    .container {
-      background-color: #fff;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      padding: 30px;
-      width: 400px;
-    }
+.container {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  text-align: center;
+  width: 400px;
+}
 
-    h1 {
-      text-align: center;
-      color: #333;
-      margin-bottom: 25px;
-    }
+h1 {
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
 
-    #todo-form {
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 20px;
-    }
+.input-group {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
 
-    #todo-form label {
-      margin-bottom: 5px;
-      color: #555;
-    }
+.input-group input,
+.input-group button {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-    #todo-form input {
-      padding: 10px;
-      margin-bottom: 10px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      font-size: 16px;
-    }
+.input-group input:focus,
+.input-group button:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.3);
+}
 
-    #todo-form button {
-      background-color: #6a994e;
-      /* Earthy green */
-      color: white;
-      border: none;
-      padding: 12px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background-color 0.3s ease;
-    }
+.input-group button {
+  background: #8e44ad;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
 
-    #todo-form button:hover {
-      background-color: #5c8a41;
-    }
+.input-group button:hover {
+  background: #9b59b6;
+}
 
-    #todo-list {
-      list-style-type: none;
-      padding: 0;
-    }
+#todo-list {
+  list-style: none;
+  padding: 0;
+}
 
-    .todo-item {
-      display: flex;
-      align-items: center;
-      padding: 15px;
-      border-bottom: 1px solid #eee;
-    }
+.todo-item {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform-origin: center left;
+}
 
-    .todo-item:last-child {
-      border-bottom: none;
-    }
+.todo-item:hover {
+  transform: scale(1.02);
+  background: rgba(255, 255, 255, 0.2);
+}
 
-    .todo-item span {
-      flex-grow: 1;
-      color: #333;
-    }
+.todo-item.fade-out {
+  opacity: 0;
+  transform: translateX(20px);
+}
 
-    .delete-button {
-      background-color: #d32f2f;
-      /* Red */
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
+.todo-item button {
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
 
-    .delete-button:hover {
-      background-color: #b71c1c;
-    }
+.todo-item button:hover {
+  background: #c0392b;
+}
 
-    .todo-checkbox {
-      margin-right: 10px;
-    }
+#delete-selected {
+  background: #3498db;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-top: 20px;
+}
 
-    #delete-selected {
-      background-color: #1976d2;
-      /* Blue */
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 4px;
-      cursor: pointer;
-      margin-top: 20px;
-      width: 100%;
-      transition: background-color 0.3s ease;
-      display: none;
-      /* Initially hidden */
-    }
+#delete-selected:hover {
+  background: #2980b9;
+}
 
-    #delete-selected:hover {
-      background-color: #1565c0;
-    }
+.todo-item input[type="checkbox"] {
+  margin-right: 10px;
+}
