@@ -36,7 +36,7 @@ function deleteTodo(index) {
 
 function deleteSelectedTodos() {
   const checkboxes = document.querySelectorAll('.todo-checkbox:checked');
-  const indicesToDelete = Array.from(checkboxes).map(checkbox => parseInt(checkbox.dataset.index)).sort((a, b) => b - a); //Sort in descending order to avoid index issues.
+  const indicesToDelete = Array.from(checkboxes).map(checkbox => parseInt(checkbox.dataset.index)).sort((a, b) => b - a); //Sorting in descending order to avoid index issues.
 
   indicesToDelete.forEach(index => {
     todos.splice(index, 1);
