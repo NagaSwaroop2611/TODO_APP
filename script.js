@@ -1,9 +1,11 @@
-// JavaScript code of Todo App
-const todoForm = document.getElementById('todo-form');
+// JS Code of Todo App
+const todoInput = document.getElementById('todo-input');
+const todoTime = document.getElementById('todo-time');
+const addTodoButton = document.getElementById('add-todo');
 const todoList = document.getElementById('todo-list');
 const deleteSelectedButton = document.getElementById('delete-selected');
 
-let todos = [];
+let todos = JSON.parse(localStorage.getItem('todos')) || [];
 
 function renderTodos() {
   todoList.innerHTML = '';
@@ -11,55 +13,75 @@ function renderTodos() {
     const listItem = document.createElement('li');
     listItem.classList.add('todo-item');
     listItem.innerHTML = `
-      <input type="checkbox" class="todo-checkbox" data-index="${index}">
-      <span>${todo.name} (${todo.duration} minutes)</span>
-      <button class="delete-button" data-index="${index}">Delete</button>
-    `;
+                <input type="checkbox" data-index="${index}">
+                <span>${todo.text} - ${new Date(todo.time).toLocaleString()}</span>
+                <button data-index="${index}">Delete</button>
+            `;
     todoList.appendChild(listItem);
+
+    const deleteButton = listItem.querySelector('button');
+    deleteButton.addEventListener('click', () => {
+      deleteTodo(index);
+    });
+
+    const checkbox = listItem.querySelector('input[type="checkbox"]');
   });
-  if (todos.length > 0) {
-    deleteSelectedButton.style.display = "block";
-  } else {
-    deleteSelectedButton.style.display = "none";
-  }
 }
 
-function addTodo(name, duration) {
-  todos.push({ name, duration });
-  renderTodos();
+function addTodo() {
+  const text = todoInput.value.trim();
+  const time = new Date(todoTime.value).getTime();
+
+  if (text && time) {
+    todos.push({ text, time });
+    localStorage.setItem('todos', JSON.stringify(todos));
+    todoInput.value = '';
+    todoTime.value = '';
+    renderTodos();
+    scheduleRemoval(todos.length - 1);
+  }
 }
 
 function deleteTodo(index) {
   todos.splice(index, 1);
+  localStorage.setItem('todos', JSON.stringify(todos));
   renderTodos();
 }
 
-function deleteSelectedTodos() {
-  const checkboxes = document.querySelectorAll('.todo-checkbox:checked');
-  const indicesToDelete = Array.from(checkboxes).map(checkbox => parseInt(checkbox.dataset.index)).sort((a, b) => b - a); //Sorting in descending order to avoid index issues.
+function scheduleRemoval(index) {
+  const todo = todos[index];
+  const now = Date.now();
+  const timeDiff = todo.time - now;
 
-  indicesToDelete.forEach(index => {
-    todos.splice(index, 1);
-  });
-  renderTodos();
-}
-
-todoForm.addEventListener('submit', (event) => {
-  event.preventDefault();
-  const name = document.getElementById('event-name').value;
-  const duration = parseInt(document.getElementById('duration').value);
-  addTodo(name, duration);
-  document.getElementById('event-name').value = '';
-  document.getElementById('duration').value = '';
-});
-
-todoList.addEventListener('click', (event) => {
-  if (event.target.classList.contains('delete-button')) {
-    const index = parseInt(event.target.dataset.index);
+  if (timeDiff > 0) {
+    setTimeout(() => {
+      const listItem = todoList.children[index];
+      if (listItem) {
+        listItem.classList.add('fade-out');
+        setTimeout(() => {
+          deleteTodo(index);
+        }, 300);
+      }
+    }, timeDiff);
+  } else {
     deleteTodo(index);
   }
-});
+}
 
-deleteSelectedButton.addEventListener('click', deleteSelectedTodos);
+function deleteSelected() {
+  const checkboxes = document.querySelectorAll('#todo-list input[type="checkbox"]:checked');
+  const indicesToDelete = Array.from(checkboxes).map(cb => parseInt(cb.dataset.index)).sort((a, b) => b - a);
+
+  indicesToDelete.forEach(index => {
+    deleteTodo(index);
+  });
+}
+
+addTodoButton.addEventListener('click', addTodo);
+deleteSelectedButton.addEventListener('click', deleteSelected);
+
+todos.forEach((todo, index) => {
+  scheduleRemoval(index);
+});
 
 renderTodos();
